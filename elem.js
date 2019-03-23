@@ -1,0 +1,18 @@
+class Elem {
+    constructor(matrix, cords) {
+        this.matrix = matrix;
+        this.cords = cords;
+        this.value = "";
+    };
+
+    show() {
+
+        for(let cord of this.cords) {
+            console.log();
+
+            this.matrix.setCell(cord[0], cord[1], this.value);
+        };
+    };
+
+
+};
