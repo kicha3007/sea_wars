@@ -1,9 +1,12 @@
 class Matrix {
-    constructor( elem , rowsLength = 20, colsLength = 30) {
+    constructor( elem , rowsLength = 20, colsLength = 30, name) {
         this.elem = elem;
         this.cells = [];
         this.rowsLength = rowsLength;
         this.colsLength = colsLength;
+        this.name = name;
+        this.liveShips = [1];
+        this.game = "true";
     }
 
     create() {
@@ -45,16 +48,37 @@ class Matrix {
 
     };
 
+    getStatus(x, y) {
+        let num = this._calcActiveCell(x, y);
+        return this.elem.children[num].getAttribute("data-game")
+    }
+
     _calcActiveCell(x, y) {
        return (y - 1) * this.rowsLength + x - 1;
+
     };
 
-    getActiveCell(cellName) {
-        return this.cells.filter(function (item) {
-            return item == cellName
+    setGameStatus(alive) {
+        if(alive.length == 0 && this.name == "Компьютер") {
+            alert("Вы победили!" );
+        } else if (alive.length == 0 && this.name != "Компьютер") {
+            alert("Вы проиграли! ");
+        };
 
+        if(!this.game) {
+            alert("Игра окончена!");
+        }
+    };
+
+    getLiveShip(cellName) {
+        this.liveShips = this.cells.filter(function (item) {
+            return item == cellName;
         });
+
+        this.setGameStatus(this.liveShips)
+
     };
+
 };
 
 

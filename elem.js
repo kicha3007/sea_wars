@@ -8,8 +8,6 @@ class Elem {
     show() {
 
         for(let cord of this.cords) {
-            console.log();
-
             this.matrix.setCell(cord[0], cord[1], this.value);
         };
     };

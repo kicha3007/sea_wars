@@ -36,4 +36,9 @@ html, body {
     background: red;
 }
 
+.fields > div[data-game="blank"] {
+    background: blue;
+}
+
+
 
