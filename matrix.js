@@ -1,12 +1,12 @@
 class Matrix {
-    constructor( elem , rowsLength = 20, colsLength = 30, name) {
+    constructor( elem , rowsLength = 20, colsLength = 30, name = "Компьютер") {
         this.elem = elem;
         this.cells = [];
         this.rowsLength = rowsLength;
         this.colsLength = colsLength;
         this.name = name;
-        this.liveShips = [1];
-        this.game = "true";
+        // this.liveShips = [1];
+        // this.game = "true";
     }
 
     create() {
@@ -20,9 +20,9 @@ class Matrix {
             this.elem.appendChild(div);
             this.cells[i] = "";
 
-            div.setAttribute("data-game", "") ;
+            div.setAttribute("data-game", "");
 
-            div.setAttribute("id",  xid++ + "_" + yid) ;
+            div.setAttribute("id",  xid++ + "_" + yid);
 
             if((this.cells.length -1) % this.rowsLength == 0  ) {
                 div.classList.add("row-start");
@@ -55,10 +55,13 @@ class Matrix {
 
     _calcActiveCell(x, y) {
        return (y - 1) * this.rowsLength + x - 1;
-
     };
 
-    setGameStatus(alive) {
+    getName() {
+        return this.name;
+    };
+
+   /* setGameStatus(alive) {
         if(alive.length == 0 && this.name == "Компьютер") {
             alert("Вы победили!" );
         } else if (alive.length == 0 && this.name != "Компьютер") {
@@ -77,7 +80,7 @@ class Matrix {
 
         this.setGameStatus(this.liveShips)
 
-    };
+    };*/
 
 };
 

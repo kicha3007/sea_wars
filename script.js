@@ -1,17 +1,22 @@
 window.onload = function (e) {
 
+    // Максимальное количество короблей на поле
     const maxShip = 2;
 
+    // Кто сейчас ходит
     let myStep = true;
 
+    // Создаем поле игрока
     const myMatrixWrap = document.querySelector("#myField");
-    const myMatrix = new Matrix(myMatrixWrap, 15, 15);
+    const myMatrix = new Matrix(myMatrixWrap, 15, 15, "Игрок");
     myMatrix.create();
 
+    // Создаем поле компьютера
     const compMatrixWrap = document.querySelector("#compField");
-    const compMatrix = new Matrix(compMatrixWrap, 15, 15);
+    const compMatrix = new Matrix(compMatrixWrap, 15, 15, "Копьютер");
     compMatrix.create();
 
+    // Функция выстрела
     const shoot = function (curt, matrix, e) {
         let fieldAttribute,
             positionHit;
@@ -25,6 +30,7 @@ window.onload = function (e) {
             // Рандомный выстрел комьютера
             let xCompRandomShoot = +Helpers.random(1, matrix.rowsLength);
             let yCompRandomShoot = +Helpers.random(1, matrix.colsLength);
+
 
             fieldAttribute = matrix.getStatus(xCompRandomShoot, yCompRandomShoot);
             positionHit = [xCompRandomShoot, yCompRandomShoot];
@@ -51,9 +57,8 @@ window.onload = function (e) {
                 }
                 i++;
             }
-            ;
-
-            // alert("ранил")
+            
+            console.log("ранил");
         };
 
         // Проверяем в какую клетку попали
@@ -61,27 +66,25 @@ window.onload = function (e) {
             case "ship":
                 matrix.setCell(+positionHit[0], +positionHit[1], "hit");
                 checkKill(matrix)
-                user.getLiveShip("ship");
+
                 break;
             case "hit":
-                // Сюда уже стрелял, давай в другую
-                return;
             case "blank":
-                // Сюда уже стрелял, давай в другую
+                console.log(matrix.getName(), "Ты сюда уже стрелял, давай в другую");
                 return;
             default:
                 matrix.setCell(+positionHit[0], +positionHit[1], "blank");
-        }
-        ;
+        };
 
         // В зависимости от хода удаляем обрачотчики и перезапускаем ход
         if (myStep) {
             myMatrixWrap.removeEventListener("mousedown", myShoot);
         } else {
             compMatrixWrap.removeEventListener("click", compShoot);
-            myStep = !myStep;
-            controlGame();
         }
+
+        myStep = !myStep;
+        controlGame();
     };
 
     // Привязываем аргументы к shoot, чтоб можно  было отменять обработчик в дальнейшем
@@ -97,7 +100,9 @@ window.onload = function (e) {
             myMatrixWrap.addEventListener("mousedown", myShoot);
 
         } else {
+
             compMatrixWrap.addEventListener("click", compShoot);
+
             setTimeout(function () {
                 compMatrixWrap.click();
             }, 300);
@@ -154,7 +159,6 @@ window.onload = function (e) {
             createNewShip(matrix, coordsShip);
 
         }
-        ;
     };
 
     randomShips(myMatrix);

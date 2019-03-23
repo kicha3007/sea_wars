@@ -32,6 +32,10 @@ html, body {
     background: yellow;
 }
 
+.fields > div[data-game="ship"] + div[data-game="ship"] {
+    background: yellow;
+}
+
 .fields > div[data-game="hit"] {
     background: red;
 }
