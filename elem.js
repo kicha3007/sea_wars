@@ -1,3 +1,4 @@
+// Родительский класс коробля
 class Elem {
     constructor(matrix, cords) {
         this.matrix = matrix;
@@ -7,10 +8,9 @@ class Elem {
 
     show() {
 
-        for(let cord of this.cords) {
+        for (let cord of this.cords) {
             this.matrix.setCell(cord[0], cord[1], this.value);
-        };
+        }
     };
-
 
 };

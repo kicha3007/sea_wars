@@ -31,9 +31,6 @@ window.onload = function (e) {
         statusPanel.insertAdjacentHTML("afterbegin", massage);
     };
 
-    // todo удалить
-    checkErrorForm(myNames);
-
     // Проверяем заполнены ли имена на старте при вводе в input
     for (let i = 0; myNames.length > i; i++) {
         myNames[i].addEventListener("input", function () {
@@ -214,15 +211,17 @@ window.onload = function (e) {
                     endingGame(matrix);
                     return;
                 }
-                ;
                 break;
             case "hit":
             case "blank":
-                addText(matrix, ", ты сюда уже стрелял, давай в другую");
+                if (myStep) {
+                    addText(matrix, ",сюда уже стрелял, давай в другую");
+                }
                 controlGame();
                 return;
             default:
                 matrix.setCell(+positionHit[0], +positionHit[1], "blank");
+                addText(matrix, "промахнулся");
         }
 
         // В зависимости от хода удаляем обрачотчики и перезапускаем ход

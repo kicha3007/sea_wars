@@ -45,7 +45,6 @@ body * {
     justify-content: center;
     align-items: flex-start;
     margin: 0 -60px 40px;
-    overflow: hidden;
 }
 
 .modal__half {
@@ -53,6 +52,16 @@ body * {
     flex-grow: 1000;
     flex-basis: 200px;
     margin: 0 60px 10px;
+    position: relative;
+}
+
+.modal__half .error {
+    color: #ffffff;
+    position: absolute;
+    top: -30px;
+    font-size: 18px;
+    left: 0;
+    font-weight: 700;
 }
 
 .modal__buttons {

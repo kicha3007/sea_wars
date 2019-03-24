@@ -1,3 +1,4 @@
+// Конструктор кораблей
 class Ship extends Elem {
     constructor(matrix, cords) {
         super(matrix, cords);

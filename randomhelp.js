@@ -1,3 +1,4 @@
+// Класс для вычисления рандомных координат
 class RandomHelp {
     static random(min, max) {
         let dif = max - min + 1;
