@@ -20,7 +20,7 @@ class Matrix {
             this.elem.appendChild(div);
             this.cells[i] = "";
 
-            div.setAttribute("data-game", "");
+            div.setAttribute("data-game", "sea");
 
             div.setAttribute("id",  xid++ + "_" + yid);
 

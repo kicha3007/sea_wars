@@ -1,7 +1,7 @@
 window.onload = function (e) {
 
     // Максимальное количество короблей на поле
-    const maxShip = 2;
+    const maxShip = 30;
 
     // Кто сейчас ходит
     let myStep = true;
@@ -44,11 +44,10 @@ window.onload = function (e) {
 
             while (matrix.getCell(+positionHit[0] - i, +positionHit[1]) != "ship") {
                 if (matrix.getCell(+positionHit[0] - i, +positionHit[1]) == "blank" || matrix.getCell(+positionHit[0] - i, +positionHit[1]) == "") {
-                    // console.log("пустая");
 
                     while (matrix.getCell(+positionHit[0] + j, +positionHit[1]) != "ship") {
                         if (matrix.getCell(+positionHit[0] + j, +positionHit[1]) == "blank" || matrix.getCell(+positionHit[0] + j, +positionHit[1]) == "") {
-                            // alert("Убит!");
+                            console.log(matrix.getName(), "Уничтожил корабль противника!");
                             return;
                         }
                         j++;
@@ -58,7 +57,7 @@ window.onload = function (e) {
                 i++;
             }
             
-            console.log("ранил");
+            console.log(matrix.getName(),  "  ранил корабль противника");
         };
 
         // Проверяем в какую клетку попали
@@ -66,11 +65,11 @@ window.onload = function (e) {
             case "ship":
                 matrix.setCell(+positionHit[0], +positionHit[1], "hit");
                 checkKill(matrix)
-
                 break;
             case "hit":
             case "blank":
                 console.log(matrix.getName(), "Ты сюда уже стрелял, давай в другую");
+                controlGame();
                 return;
             default:
                 matrix.setCell(+positionHit[0], +positionHit[1], "blank");
@@ -105,7 +104,7 @@ window.onload = function (e) {
 
             setTimeout(function () {
                 compMatrixWrap.click();
-            }, 300);
+            }, 100);
 
         }
     };
