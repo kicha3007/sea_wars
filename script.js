@@ -31,7 +31,6 @@ window.onload = function (e) {
         statusPanel.insertAdjacentHTML("afterbegin", massage);
     };
 
-
     // todo удалить
     checkErrorForm(myNames);
 
@@ -84,23 +83,29 @@ window.onload = function (e) {
     };
 
     const compNameWrap = document.querySelector("[data-input-name='comp']"),
-    userNameWrap = document.querySelector("[data-input-name='user']"),
-    innerCompName = document.querySelector("[data-name='comp']"),
-    innerUserName = document.querySelector("[data-name='user']"),
-    overlay = document.querySelector("[data-overlay]"),
-    innerStartBtn = document.querySelector("[data-starting-game]"),
-    mainContent = document.querySelector("[data-content]"),
-    statusPanel = document.querySelector("[data-status-panel]"),
-    modalContent = document.querySelector("[data-modal-content]"),
-    modalTitle = document.querySelector("[data-modal-title]"),
-    matrixSizeWrap = document.querySelector("[data-matrix-size]");
+        userNameWrap = document.querySelector("[data-input-name='user']"),
+        innerCompName = document.querySelector("[data-name='comp']"),
+        innerUserName = document.querySelector("[data-name='user']"),
+        overlay = document.querySelector("[data-overlay]"),
+        innerStartBtn = document.querySelector("[data-starting-game]"),
+        mainContent = document.querySelector("[data-content]"),
+        statusPanel = document.querySelector("[data-status-panel]"),
+        modalContent = document.querySelector("[data-modal-content]"),
+        modalTitle = document.querySelector("[data-modal-title]"),
+        matrixSizeWrap = document.querySelector("[data-matrix-size]"),
+        controlPanelWrap = document.querySelector("[data-control-panel]"),
+        shipsAmount = document.querySelector("[data-ships-amount]");
 
     matrixSizeWrap.onkeypress = function (e) {
         return false;
     }
 
+    shipsAmount.onkeypress = function (e) {
+        return false;
+    }
+
     btnStart.addEventListener("click", function (e) {
-        if(!this.classList.contains("disabled")) {
+        if (!this.classList.contains("disabled")) {
             compName = compNameWrap.value,
             userName = userNameWrap.value;
 
@@ -117,18 +122,19 @@ window.onload = function (e) {
     let compMatrix;
 
     // Максимальное количество короблей на поле
-    const maxShip = 10;
+    let maxShip = 20;
 
     // Кто сейчас ходит
     let myStep = true;
 
     // Размер игрового поля
-    let matrixSize = 10;
+    let matrixSize;
 
     innerStartBtn.addEventListener("click", function () {
         mainContent.classList.remove("hide");
-        console.log(this);
-        this.style.display = "none";
+        matrixSize = matrixSizeWrap.value;
+        maxShip =  shipsAmount.value;
+        controlPanelWrap.style.display = "none";
 
         // Создаем поле игрока
         myMatrix = new Matrix(myMatrixWrap, matrixSize, matrixSize, userName);
@@ -196,7 +202,7 @@ window.onload = function (e) {
                 i++;
             }
 
-            addText(matrix, "ранил корабль противника") ;
+            addText(matrix, "ранил корабль противника");
         };
 
         // Проверяем в какую клетку попали
@@ -204,10 +210,11 @@ window.onload = function (e) {
             case "ship":
                 matrix.setCell(+positionHit[0], +positionHit[1], "hit");
                 checkKill(matrix);
-                if(matrix.checkGameStatus() == true) {
+                if (matrix.checkGameStatus() == true) {
                     endingGame(matrix);
-                   return;
-                };
+                    return;
+                }
+                ;
                 break;
             case "hit":
             case "blank":
@@ -220,10 +227,8 @@ window.onload = function (e) {
 
         // В зависимости от хода удаляем обрачотчики и перезапускаем ход
 
-
-
         if (myStep) {
-           
+
             myMatrixWrap.removeEventListener("mousedown", myShoot);
         } else {
             compMatrixWrap.removeEventListener("click", compShoot);
@@ -233,9 +238,7 @@ window.onload = function (e) {
         controlGame();
     };
 
-
     // Привязываем аргументы к shoot, чтоб можно  было отменять обработчик в дальнейшем
-
     let myShoot;
     let compShoot;
 
@@ -243,8 +246,6 @@ window.onload = function (e) {
         myShoot = shoot.bind(this, e, myMatrix);
         compShoot = shoot.bind(this, e, compMatrix);
     };
-
-
 
     function controlGame() {
 
@@ -272,11 +273,18 @@ window.onload = function (e) {
             xStartShip = RandomHelp.random(1, matrix.rowsLength);
             yStartShip = RandomHelp.random(1, matrix.colsLength);
 
+            function coordShips(x, y, length) {
+                let arr = [];
+                for (let i = 0; i < length; i++) {
+                    arr.push([x + i, y])
+                }
+                return arr;
+            };
+
             let coordsShip;
 
-            // todo исправить на цикл
-            if (shipDeck == 1) {
-                coordsShip = [[xStartShip, yStartShip], [xStartShip + 1, yStartShip], [xStartShip + 2, yStartShip], [xStartShip + 3, yStartShip]];
+            if (shipDeck <= 3) {
+                coordsShip = coordShips(xStartShip, yStartShip, 4);
                 let fieldChek = clearFieldCheck(matrix, coordsShip, "ship");
                 if (!fieldChek) {
                     shipDeck--;
@@ -284,22 +292,22 @@ window.onload = function (e) {
                 }
             }
 
-            else if (shipDeck > 1 && shipDeck <= 3) {
-                coordsShip = [[xStartShip, yStartShip], [xStartShip + 1, yStartShip], [xStartShip + 2, yStartShip]];
+            else if (shipDeck > 3 && shipDeck <= 8) {
+                coordsShip = coordShips(xStartShip, yStartShip, 3);
                 let fieldChek = clearFieldCheck(matrix, coordsShip, "ship");
                 if (!fieldChek) {
                     shipDeck--;
                     continue;
                 }
-            } else if (shipDeck > 3 && shipDeck <= 6) {
-                coordsShip = [[xStartShip, yStartShip], [xStartShip + 1, yStartShip]];
+            } else if (shipDeck > 8 && shipDeck <= 14) {
+                coordsShip = coordShips(xStartShip, yStartShip, 2);
                 let fieldChek = clearFieldCheck(matrix, coordsShip, "ship");
                 if (!fieldChek) {
                     shipDeck--;
                     continue;
                 }
-            } else if (shipDeck > 6 && shipDeck <= maxShip) {
-                coordsShip = [[xStartShip, yStartShip]];
+            } else if (shipDeck > 14 && shipDeck <= maxShip) {
+                coordsShip = coordShips(xStartShip, yStartShip, 1);
                 let fieldChek = clearFieldCheck(matrix, coordsShip, "ship");
                 if (!fieldChek) {
                     shipDeck--;

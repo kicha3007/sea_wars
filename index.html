@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&amp;amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;amp;subset=cyrillic" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
@@ -16,47 +16,73 @@
             Sea Wars
         </div>
         <div class="modal__content" data-modal-content>
-        <div class="modal__input-wrap">
-            <div class="modal__half">
-                <input class="modal__input" type="text" name="username" maxlength="200" value="игрок" placeholder="Введите ваше имя" data-input-name="user" required/>
+            <div class="modal__input-wrap">
+                <div class="modal__half">
+                    <input class="modal__input" type="text" name="username" maxlength="200" value=""
+                           placeholder="Введите ваше имя" data-input-name="user" required />
+                </div>
+                <div class="modal__half">
+                    <input class="modal__input" type="text" name="compname" maxlength="200" value="Компьютер"
+                           placeholder="Имя комьютера" data-input-name="comp" required />
+                </div>
             </div>
-            <div class="modal__half">
-                <input class="modal__input" type="text" name="compname" maxlength="200" value="Компьютер" placeholder="Имя комьютера" data-input-name="comp" required/>
+            <div class="modal__buttons">
+                <button class="btn disabled" data-start-game>
+                    Начать игру
+                </button>
             </div>
-        </div>
-        <div class="modal__buttons" >
-            <button class="btn disabled"  data-start-game >
-                Начать игру
-            </button>
-        </div>
         </div>
     </form>
 </section>
-<section class="control__panel">
-    <input class="modal__input" type="number" min="15" max="30" value="15"  data-matrix-size required/>
-    <div class="control__buttons">
-        <button class="btn"  data-starting-game >
-            Старт игры
-        </button>
+<section class="control__panel" data-control-panel>
+    <div class="control__panel-title">
+        Настройки
+    </div>
+    <div class="control__panel-wrapper">
+    <div class="control__half">
+        <div class="control__input-wrap">
+            <div class="control__input-title">
+                Размер игрового поля:
+            </div>
+            <div class="control__input-inner-wrap">
+                <input class="modal__input" type="number" min="15" max="30" value="15" data-matrix-size required />
+            </div>
+        </div>
+        <div class="control__input-wrap">
+            <div class="control__input-title">
+                Количество кораблей:
+            </div>
+            <div class="control__input-inner-wrap">
+                <input class="modal__input" type="number" min="20" max="30" value="15" data-ships-amount required />
+            </div>
+        </div>
+    </div>
+    <div class="control__half">
+        <div class="control__buttons">
+            <button class="btn" data-starting-game>
+                Старт игры
+            </button>
+        </div>
+    </div>
     </div>
 </section>
 
 <section class="main hide" data-content>
-    <h1>Sea Wars</h1>
-<div class="main__wrapper">
-    <div class="main__half">
-        <div class="main__name" data-name="user"> </div>
-        <div id="compField" class="main__fields"></div>
-    </div>
+    <h1 class="main__title">Sea Wars</h1>
+    <div class="main__wrapper">
+        <div class="main__half">
+            <div class="main__name" data-name="user"></div>
+            <div id="compField" class="main__fields"></div>
+        </div>
 
-    <div class="main__half">
-        <div class="main__name" data-name="comp"> Компьютер</div>
-        <div id="myField" class="main__fields"></div>
+        <div class="main__half">
+            <div class="main__name" data-name="comp"> Компьютер</div>
+            <div id="myField" class="main__fields"></div>
+        </div>
     </div>
-</div>
     <div class="main__bottom">
 
-        <div class="status__panel" >
+        <div class="status__panel">
             <div class="status__panel-title">
                 Бортовой журнал
             </div>

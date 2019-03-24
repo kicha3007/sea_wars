@@ -1,7 +1,6 @@
 
 body,html {
     width: 100%;
-    height: 100%;
     padding: 0;
     margin: 0;
     font-size: 16px;
@@ -79,11 +78,51 @@ body * {
 
 .modal__input {
     border: 1px solid rgba(0,0,0,.2);
-    font-size: .875rem;
+    font-size: 18px;
     padding: 14px 20px;
     color: rgba(51,51,51,.5);
     width: 100%;
     line-height: 1.42;
+}
+
+.control__half {
+    margin: 0 40px;
+}
+
+.control__panel {
+    /*background-image: radial-gradient(closest-corner at 20px 20px, dodgerblue, blue);*/
+    background-image: radial-gradient(farthest-side at 20px 20px, dodgerblue, blue);
+    margin-top: 130px;
+    padding: 100px 0;
+}
+
+.control__panel-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.control__input-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+}
+
+.control__panel-title {
+    font-size: 34px;
+    text-align: center;
+    color: #ffffff;
+    padding-bottom: 20px;
+}
+
+.control__input-title {
+    font-size: 18px;
+    margin-right: 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    color: #ffffff;
 }
 
 .control__buttons {
@@ -157,8 +196,20 @@ body * {
     position: relative;
 }
 
+.main__title {
+    font-size: 30px;
+    text-align: center;
+}
 
+.main__name {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
 
+.status__panel-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 
 .main__fields > div.row-start {
     clear: both;
@@ -306,7 +357,34 @@ body * {
 }
 
 .main__fields > div[data-game="blank"] {
-    background: blue;
+    background: lightskyblue;
+}
+
+.main__fields > div[data-game="blank"]:after {
+    content: "";
+    position: absolute;
+    top: 43%;
+    right: 2px;
+    width: 8px;
+    height: 4px;
+    border-radius: 5px 0 0 5px;
+    background-color: black;
+    transform: rotate(112deg);
+}
+
+.main__fields > div[data-game="blank"]:before {
+    content: "";
+    position: absolute;
+    top: 28%;
+    right: 2px;
+    width: 8px;
+    transform: rotate(-154deg);
+    z-index: 20;
+    height: 0;
+    width: 3px;
+    border-bottom: 3px solid burlywood;
+    border-left: 1px solid transparent;
+    border-right: 1px solid;
 }
 
 .hide {
