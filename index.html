@@ -10,17 +10,17 @@
     <title>Document</title>
 </head>
 <body>
-<div class="overlay">
+<section class="overlay" data-overlay>
     <form class="modal">
         <div class="modal__title">
             Sea Wars
         </div>
         <div class="modal__input-wrap">
             <div class="modal__half">
-                <input class="modal__input" type="text" name="username" maxlength="200" value="" placeholder="Введите ваше имя" data-input-name required/>
+                <input class="modal__input" type="text" name="username" maxlength="200" value="1111111111" placeholder="Введите ваше имя" data-input-name="user" required/>
             </div>
             <div class="modal__half">
-                <input class="modal__input" type="text" name="compname" maxlength="200" value="Компьютер" placeholder="Имя комьютера" data-input-name required/>
+                <input class="modal__input" type="text" name="compname" maxlength="200" value="Компьютер" placeholder="Имя комьютера" data-input-name="comp" required/>
             </div>
         </div>
         <div class="modal__buttons" >
@@ -30,18 +30,25 @@
         </div>
 
     </form>
-</div>
+</section>
+<section class="control__panel">
+    <div class="control__buttons">
+        <button class="btn"  data-starting-game >
+            Старт игры
+        </button>
+    </div>
+</section>
 
-<section class="main">
+<section class="main " data-content>
     <h1>Sea Wars</h1>
 <div class="main__wrapper">
     <div class="main__half">
-        <div class="main__name" data-name> Компьютер</div>
+        <div class="main__name" data-name="user"> Игрок</div>
         <div id="compField" class="main__fields"></div>
     </div>
 
     <div class="main__half">
-        <div class="main__name" data-name> Игрок</div>
+        <div class="main__name" data-name="comp"> Компьютер</div>
         <div id="myField" class="main__fields"></div>
     </div>
 </div>

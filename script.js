@@ -1,22 +1,30 @@
 window.onload = function (e) {
 
-    function checkName() {
-    };
-
     const btnStart = document.querySelector("[data-start-game]");
     const myNames = document.querySelectorAll("[data-input-name]");
 
+    // Сохраняем имя игрока и комьютера
+
+    let userName,
+        compName;
+
+    // Проверяем заполнены ли имена на старте нажатием на кнопку
     btnStart.addEventListener("click", function (e) {
         e.preventDefault();
         checkErrorForm(myNames);
     });
 
+    // todo удалить
+    checkErrorForm(myNames);
+
+    // Проверяем заполнены ли имена на старте при вводе в input
     for (let i = 0; myNames.length > i; i++) {
         myNames[i].addEventListener("input", function () {
             checkErrorForm(myNames);
         });
     }
 
+    // Проверяем фомру с именами на ошибки
     function checkErrorForm(arr) {
         let errorList = [];
 
@@ -38,6 +46,7 @@ window.onload = function (e) {
 
     };
 
+    // Добавляем класс ошибок если есть
     function addError(container, errorMassage, classError) {
         if (container.value == "") {
             const message = document.createElement("div");
@@ -49,11 +58,39 @@ window.onload = function (e) {
 
     };
 
+    // Удаляем класс ошибок
     function removeError(container, classError) {
         if (container.parentNode.lastChild.className == classError) {
             container.parentNode.removeChild(container.parentNode.lastChild);
         }
     };
+
+    const compNameWrap = document.querySelector("[data-input-name='comp']"),
+    userNameWrap = document.querySelector("[data-input-name='user']"),
+    innerCompName = document.querySelector("[data-name='comp']"),
+    innerUserName = document.querySelector("[data-name='user']"),
+    overlay = document.querySelector("[data-overlay]"),
+    innerStartBtn = document.querySelector("[data-starting-game]"),
+    mainContent = document.querySelector("[data-content]");
+
+    btnStart.addEventListener("click", function (e) {
+        if(!this.classList.contains("disabled")) {
+            compName = compNameWrap.value,
+            userName = userNameWrap.value;
+
+            innerCompName.innerHTML = compName;
+            innerUserName.innerHTML = userName;
+            overlay.style.display = "none";
+
+            console.log("Можно начинать игру");
+        }
+    });
+
+    const myMatrixWrap = document.querySelector("#myField");
+    const compMatrixWrap = document.querySelector("#compField");
+
+    let myMatrix;
+    let compMatrix;
 
     // Максимальное количество короблей на поле
     const maxShip = 30;
@@ -64,15 +101,33 @@ window.onload = function (e) {
     // Размер игрового поля
     let matrixSize = 31;
 
-    // Создаем поле игрока
-    const myMatrixWrap = document.querySelector("#myField");
-    const myMatrix = new Matrix(myMatrixWrap, matrixSize, matrixSize, "Игрок");
-    myMatrix.create();
+    innerStartBtn.addEventListener("click", function () {
+        // mainContent.classList.remove("hide");
+        // Создаем поле игрока
+        myMatrix = new Matrix(myMatrixWrap, matrixSize, matrixSize, userName);
+        myMatrix.create();
 
-    // Создаем поле компьютера
-    const compMatrixWrap = document.querySelector("#compField");
-    const compMatrix = new Matrix(compMatrixWrap, matrixSize, matrixSize, "Копьютер");
-    compMatrix.create();
+        // Создаем поле компьютера
+        compMatrix = new Matrix(compMatrixWrap, matrixSize, matrixSize, compName);
+        compMatrix.create();
+
+        // Вызываем рандомную расстановук кораблей
+        randomShips(myMatrix);
+        randomShips(compMatrix);
+
+        shootings();
+
+        // Начинаем игру
+        controlGame();
+    });
+
+
+
+
+
+
+
+
 
     // Функция выстрела
     const shoot = function (curt, matrix, e) {
@@ -135,6 +190,7 @@ window.onload = function (e) {
 
         // В зависимости от хода удаляем обрачотчики и перезапускаем ход
         if (myStep) {
+           
             myMatrixWrap.removeEventListener("mousedown", myShoot);
         } else {
             compMatrixWrap.removeEventListener("click", compShoot);
@@ -144,12 +200,18 @@ window.onload = function (e) {
         controlGame();
     };
 
-    // Привязываем аргументы к shoot, чтоб можно  было отменять обработчик в дальнейшем
-    const myShoot = shoot.bind(this, e, myMatrix);
-    const compShoot = shoot.bind(this, e, compMatrix);
 
-    // Начинаем игру
-    controlGame();
+    // Привязываем аргументы к shoot, чтоб можно  было отменять обработчик в дальнейшем
+
+    let myShoot;
+    let compShoot;
+
+    function shootings() {
+        myShoot = shoot.bind(this, e, myMatrix);
+        compShoot = shoot.bind(this, e, compMatrix);
+    };
+
+
 
     function controlGame() {
 
@@ -218,8 +280,7 @@ window.onload = function (e) {
         }
     };
 
-    randomShips(myMatrix);
-    randomShips(compMatrix);
+
 
     // Проверяем чтоб коробли не становились рядом друг с другом
     function clearFieldCheck(matrix, arr, fieldName) {

@@ -86,6 +86,10 @@ body * {
     line-height: 1.42;
 }
 
+.control__buttons {
+    max-width: 200px;
+}
+
 .btn {
     display: inline-block;
     vertical-align: middle;
@@ -311,6 +315,10 @@ body * {
 
 .main__fields > div[data-game="blank"] {
     background: blue;
+}
+
+.hide {
+    display: none;
 }
 
 
