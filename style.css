@@ -1,17 +1,149 @@
-html, body {
+
+body,html {
+    width: 100%;
+    height: 100%;
+    padding: 0;
     margin: 0;
+    font-size: 16px;
 }
 
-.fields {
+body * {
+    font-family: "Roboto","Ubuntu","Open Sans","Lato",sans-serif;
+    color: rgba(0,0,0,.87);
+    line-height: 1.42;
+    box-sizing: border-box;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 800;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    background-color: rgba(51, 51, 51, .9);
+}
+
+.modal {
+    max-width: 900px;
+    width: 100%;
+    margin: 100px auto 0;
+}
+
+.modal__title {
+    font-size: 115px;
+    color: white;
+    text-align: center;
+    text-shadow: 5px 5px 10px  aqua;
+    margin-bottom: 40px;
+}
+
+.modal__input-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 -60px 40px;
+    overflow: hidden;
+}
+
+.modal__half {
+    max-width: 260px;
+    flex-grow: 1000;
+    flex-basis: 200px;
+    margin: 0 60px 10px;
+}
+
+.modal__buttons {
+    margin: 0 auto;
+    max-width: 200px;
+}
+
+.modal__input::-webkit-input-placeholder {
+    color: rgba(51,51,51,.5);
+}
+
+.modal__input::-moz-placeholder {
+    color: rgba(51,51,51,.5);
+}
+
+.modal__input:-ms-input-placeholder {
+    color: rgba(51,51,51,.5);
+}
+
+.modal__input:-moz-placeholder {
+    color: rgba(51,51,51,.5);
+}
+
+.modal__input {
+    border: 1px solid rgba(0,0,0,.2);
+    font-size: .875rem;
+    padding: 14px 20px;
+    color: rgba(51,51,51,.5);
+    width: 100%;
+    line-height: 1.42;
+}
+
+.btn {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: center;
+    user-select: none;
+    border: 0;
+    padding: 20px 15px;
+    font-size: 28px;
+    transition: all .2s ease-in-out;
+    background-color: lightskyblue ;
+    text-transform: none;
+    cursor: pointer;
+    color: #000000;
+}
+
+.btn.disabled {
+    opacity: 0.4;
+}
+
+.btn.disabled:hover {
+    background-color: lightskyblue ;
+}
+
+.btn:hover {
+    background-color: aqua;
+}
+
+.btn,.btn:active,.btn:hover,.btn:visited {
+    color: #000000;
+    text-decoration: none;
+}
+
+
+.main__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 30px;
+    overflow: hidden;
+    justify-content: center;
+}
+
+.main__half {
+    margin: 0 60px 40px;
+}
+
+.main__fields {
     border-left: 1px solid #000;
     border-top: 1px solid #000;
     overflow: hidden;
-    margin: 80px;
     display: inline-block;
-
 }
 
-.fields > div {
+.main__fields > div {
     width: 20px;
     height: 20px;
     box-sizing: border-box;
@@ -20,34 +152,34 @@ html, body {
     float: left;
 }
 
-.fields > div.row-start {
+.main__fields > div.row-start {
     clear: both;
 }
 
-.fields > div[data-game="fruit"] {
+.main__fields > div[data-game="fruit"] {
     background: red;
 }
 
-.fields > div[data-game="ship"] {
+.main__fields > div[data-game="ship"] {
     background: midnightblue;
     overflow: hidden;
     position: relative;
 }
 
-.fields > div[data-game="sea"] {
+.main__fields > div[data-game="sea"] {
     background: lightskyblue;
 }
 
-.fields > div[data-game="sea"] + div[data-game="ship"],
-.fields > div[data-game="blank"] + div[data-game="ship"],
-.fields > div[data-game="ship"]:first-child {
+.main__fields > div[data-game="sea"] + div[data-game="ship"],
+.main__fields > div[data-game="blank"] + div[data-game="ship"],
+.main__fields > div[data-game="ship"]:first-child {
     position: relative;
     background: lightskyblue;
 }
 
-.fields > div[data-game="sea"] + div[data-game="ship"]:before,
-.fields > div[data-game="blank"] + div[data-game="ship"]:before,
-.fields > div[data-game="ship"]:first-child:before {
+.main__fields > div[data-game="sea"] + div[data-game="ship"]:before,
+.main__fields > div[data-game="blank"] + div[data-game="ship"]:before,
+.main__fields > div[data-game="ship"]:first-child:before {
     content: "";
     position: absolute;
     top: 0;
@@ -59,9 +191,9 @@ html, body {
     border-bottom: 9px solid transparent;
 }
 
-.fields > div[data-game="sea"] + div[data-game="ship"]:after,
-.fields > div[data-game="blank"] + div[data-game="ship"]:after,
-.fields > div[data-game="ship"]:first-child:after {
+.main__fields > div[data-game="sea"] + div[data-game="ship"]:after,
+.main__fields > div[data-game="blank"] + div[data-game="ship"]:after,
+.main__fields > div[data-game="ship"]:first-child:after {
     content: "";
     position: absolute;
     top: 50%;
@@ -73,8 +205,8 @@ html, body {
     background-color: aqua;
 }
 
-.fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"]:before,
-.fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"]:before {
+.main__fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"]:before,
+.main__fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"]:before {
     content: "";
     position: absolute;
     top: 17%;
@@ -86,8 +218,8 @@ html, body {
     border-right: 6px solid transparent;
 }
 
-.fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"]:after,
-.fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"]:after {
+.main__fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"]:after,
+.main__fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"]:after {
     content: "";
     position: absolute;
     top: 28%;
@@ -98,10 +230,10 @@ html, body {
     background-color: gray;
 }
 
-.fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:before,
-.fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:before,
-.fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after,
-.fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after {
+.main__fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:before,
+.main__fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:before,
+.main__fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after,
+.main__fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after {
     content: "";
     position: absolute;
     top: 28%;
@@ -112,12 +244,12 @@ html, body {
     background-color: aliceblue;
 }
 
-.fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after,
-.fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after {
+.main__fields > div[data-game="blank"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after,
+.main__fields > div[data-game="sea"] + div[data-game="ship"] + div[data-game="ship"] + div[data-game="ship"]:after {
     top: 60%;
 }
 
-.fields > div[data-game="hit"] {/*
+.main__fields > div[data-game="hit"] {/*
     width: 20px;
     height: 20px;
     background: linear-gradient(-45deg, red, orange);
@@ -134,27 +266,8 @@ html, body {
     position: relative;
 }
 
-.fields > div[data-game="hit"]:before,
-.fields > div[data-game="hit"]:after {
-    /*content: '';
-    width: 8px;
-    height: 8px;
-    display: block;
-    position: absolute;
-
-    top: 0px;
-
-    background: linear-gradient(-45deg, red, orange);
-    border-radius: 5px 5px 0px 5px;
-    transform: rotate(-135deg);
-    animation: .1s flame infinite;
-    filter: blur(3px);
-
-    box-shadow: 5px 8px 15px #700;
-    border: 2px solid black;
-    border-left-width: 5px;
-    border-top-width: 5px;*/
-
+.main__fields > div[data-game="hit"]:before,
+.main__fields > div[data-game="hit"]:after {
     content: '';
     width: 5px;
     height: 6px;
@@ -173,7 +286,7 @@ html, body {
 }
 
 
-.fields > div[data-game="hit"]:before {
+.main__fields > div[data-game="hit"]:before {
     right: 13px;
     width: 2px;
     height: 2px;
@@ -196,7 +309,7 @@ html, body {
     }
 }
 
-.fields > div[data-game="blank"] {
+.main__fields > div[data-game="blank"] {
     background: blue;
 }
 
