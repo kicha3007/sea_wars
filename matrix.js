@@ -49,9 +49,6 @@ class Matrix {
     getStatus(x, y) {
         let num = this._calcActiveCell(x, y);
         return this.elem.children[num].getAttribute("data-game");
-        // if (nameCell == "ship") {
-        //     this.checkGameStatus();
-        // }
     }
 
     _calcActiveCell(x, y) {
@@ -77,7 +74,6 @@ class Matrix {
         this.liveShips.pop();
 
         if (this.liveShips.length == 0) {
-            alert(this.name + "Победил!");
             return true;
         }
     };

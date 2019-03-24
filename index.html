@@ -12,12 +12,13 @@
 <body>
 <section class="overlay" data-overlay>
     <form class="modal">
-        <div class="modal__title">
+        <div class="modal__title" data-modal-title>
             Sea Wars
         </div>
+        <div class="modal__content" data-modal-content>
         <div class="modal__input-wrap">
             <div class="modal__half">
-                <input class="modal__input" type="text" name="username" maxlength="200" value="1111111111" placeholder="Введите ваше имя" data-input-name="user" required/>
+                <input class="modal__input" type="text" name="username" maxlength="200" value="игрок" placeholder="Введите ваше имя" data-input-name="user" required/>
             </div>
             <div class="modal__half">
                 <input class="modal__input" type="text" name="compname" maxlength="200" value="Компьютер" placeholder="Имя комьютера" data-input-name="comp" required/>
@@ -28,7 +29,7 @@
                 Начать игру
             </button>
         </div>
-
+        </div>
     </form>
 </section>
 <section class="control__panel">
@@ -65,7 +66,7 @@
 </section>
 
 <script src="matrix.js"></script>
-<script src="helpers.js"></script>
+<script src="randomhelp.js"></script>
 <script src="elem.js"></script>
 <script src="ship.js"></script>
 <script src="script.js"></script>

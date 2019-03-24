@@ -3,7 +3,19 @@ window.onload = function (e) {
     const btnStart = document.querySelector("[data-start-game]");
     const myNames = document.querySelectorAll("[data-input-name]");
 
-    let gameStatus;
+    function endingGame(matrix) {
+        let massage = matrix.getName() + " победил!" + "</br>" + "Игра окончена";
+
+        modalContent.style.display = "none";
+        modalTitle.insertAdjacentHTML("afterbegin", massage)
+        overlay.style.display = "block";
+
+        setTimeout(function () {
+            window.location.reload();
+        }, 3000);
+
+
+    }
 
     // Сохраняем имя игрока и комьютера
 
@@ -80,7 +92,9 @@ window.onload = function (e) {
     overlay = document.querySelector("[data-overlay]"),
     innerStartBtn = document.querySelector("[data-starting-game]"),
     mainContent = document.querySelector("[data-content]"),
-    statusPanel = document.querySelector("[data-status-panel]");
+    statusPanel = document.querySelector("[data-status-panel]"),
+    modalContent = document.querySelector("[data-modal-content]"),
+    modalTitle = document.querySelector("[data-modal-title]");
 
     btnStart.addEventListener("click", function (e) {
         if(!this.classList.contains("disabled")) {
@@ -135,6 +149,7 @@ window.onload = function (e) {
 
     // Функция выстрела
     const shoot = function (curt, matrix, e) {
+
         let fieldAttribute,
             positionHit;
 
@@ -148,8 +163,8 @@ window.onload = function (e) {
         } else {
 
             // Рандомный выстрел комьютера
-            let xCompRandomShoot = +Helpers.random(1, matrix.rowsLength);
-            let yCompRandomShoot = +Helpers.random(1, matrix.colsLength);
+            let xCompRandomShoot = +RandomHelp.random(1, matrix.rowsLength);
+            let yCompRandomShoot = +RandomHelp.random(1, matrix.colsLength);
 
             fieldAttribute = matrix.getStatus(xCompRandomShoot, yCompRandomShoot);
             positionHit = [xCompRandomShoot, yCompRandomShoot];
@@ -185,7 +200,8 @@ window.onload = function (e) {
                 matrix.setCell(+positionHit[0], +positionHit[1], "hit");
                 checkKill(matrix);
                 if(matrix.checkGameStatus() == true) {
-                   /* endingGame();*/
+                    endingGame(matrix);
+                   return;
                 };
                 break;
             case "hit":
@@ -248,8 +264,8 @@ window.onload = function (e) {
 
         for (; shipDeck <= maxShip; shipDeck++) {
 
-            xStartShip = Helpers.random(1, matrix.rowsLength);
-            yStartShip = Helpers.random(1, matrix.colsLength);
+            xStartShip = RandomHelp.random(1, matrix.rowsLength);
+            yStartShip = RandomHelp.random(1, matrix.colsLength);
 
             let coordsShip;
 
