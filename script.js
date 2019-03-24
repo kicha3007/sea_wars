@@ -13,8 +13,6 @@ window.onload = function (e) {
         setTimeout(function () {
             window.location.reload();
         }, 3000);
-
-
     }
 
     // Сохраняем имя игрока и комьютера
@@ -94,7 +92,12 @@ window.onload = function (e) {
     mainContent = document.querySelector("[data-content]"),
     statusPanel = document.querySelector("[data-status-panel]"),
     modalContent = document.querySelector("[data-modal-content]"),
-    modalTitle = document.querySelector("[data-modal-title]");
+    modalTitle = document.querySelector("[data-modal-title]"),
+    matrixSizeWrap = document.querySelector("[data-matrix-size]");
+
+    matrixSizeWrap.onkeypress = function (e) {
+        return false;
+    }
 
     btnStart.addEventListener("click", function (e) {
         if(!this.classList.contains("disabled")) {
@@ -114,7 +117,7 @@ window.onload = function (e) {
     let compMatrix;
 
     // Максимальное количество короблей на поле
-    const maxShip = 1;
+    const maxShip = 10;
 
     // Кто сейчас ходит
     let myStep = true;
@@ -124,6 +127,8 @@ window.onload = function (e) {
 
     innerStartBtn.addEventListener("click", function () {
         mainContent.classList.remove("hide");
+        console.log(this);
+        this.style.display = "none";
 
         // Создаем поле игрока
         myMatrix = new Matrix(myMatrixWrap, matrixSize, matrixSize, userName);
