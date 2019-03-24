@@ -3,6 +3,8 @@ window.onload = function (e) {
     const btnStart = document.querySelector("[data-start-game]");
     const myNames = document.querySelectorAll("[data-input-name]");
 
+    let gameStatus;
+
     // Сохраняем имя игрока и комьютера
 
     let userName,
@@ -13,6 +15,12 @@ window.onload = function (e) {
         e.preventDefault();
         checkErrorForm(myNames);
     });
+
+    function addText(matrix, text) {
+        let massage = matrix.getName() + " " + text + "<br />";
+        statusPanel.insertAdjacentHTML("afterbegin", massage);
+    };
+
 
     // todo удалить
     checkErrorForm(myNames);
@@ -71,18 +79,17 @@ window.onload = function (e) {
     innerUserName = document.querySelector("[data-name='user']"),
     overlay = document.querySelector("[data-overlay]"),
     innerStartBtn = document.querySelector("[data-starting-game]"),
-    mainContent = document.querySelector("[data-content]");
+    mainContent = document.querySelector("[data-content]"),
+    statusPanel = document.querySelector("[data-status-panel]");
 
     btnStart.addEventListener("click", function (e) {
         if(!this.classList.contains("disabled")) {
             compName = compNameWrap.value,
             userName = userNameWrap.value;
 
-            innerCompName.innerHTML = compName;
-            innerUserName.innerHTML = userName;
+            innerCompName.innerHTML = "Поле " + compName;
+            innerUserName.innerHTML = "Поле " + userName;
             overlay.style.display = "none";
-
-            console.log("Можно начинать игру");
         }
     });
 
@@ -93,19 +100,21 @@ window.onload = function (e) {
     let compMatrix;
 
     // Максимальное количество короблей на поле
-    const maxShip = 30;
+    const maxShip = 1;
 
     // Кто сейчас ходит
     let myStep = true;
 
     // Размер игрового поля
-    let matrixSize = 31;
+    let matrixSize = 10;
 
     innerStartBtn.addEventListener("click", function () {
-        // mainContent.classList.remove("hide");
+        mainContent.classList.remove("hide");
+
         // Создаем поле игрока
         myMatrix = new Matrix(myMatrixWrap, matrixSize, matrixSize, userName);
         myMatrix.create();
+        myMatrix.hideCells("hidden");
 
         // Создаем поле компьютера
         compMatrix = new Matrix(compMatrixWrap, matrixSize, matrixSize, compName);
@@ -115,19 +124,14 @@ window.onload = function (e) {
         randomShips(myMatrix);
         randomShips(compMatrix);
 
+        myMatrix.getLiveShip("ship");
+        compMatrix.getLiveShip("ship");
+
         shootings();
 
         // Начинаем игру
         controlGame();
     });
-
-
-
-
-
-
-
-
 
     // Функция выстрела
     const shoot = function (curt, matrix, e) {
@@ -138,6 +142,9 @@ window.onload = function (e) {
         if (myStep) {
             positionHit = e.target.getAttribute("id").split("_");
             fieldAttribute = e.target.getAttribute("data-game");
+
+            matrix.showCell(+positionHit[0], +positionHit[1], "hidden");
+
         } else {
 
             // Рандомный выстрел комьютера
@@ -159,7 +166,7 @@ window.onload = function (e) {
 
                     while (matrix.getCell(+positionHit[0] + j, +positionHit[1]) != "ship") {
                         if (matrix.getCell(+positionHit[0] + j, +positionHit[1]) == "blank" || matrix.getCell(+positionHit[0] + j, +positionHit[1]) == "") {
-                            console.log(matrix.getName(), "Уничтожил корабль противника!");
+                            addText(matrix, "Уничтожил корабль противника!");
                             return;
                         }
                         j++;
@@ -169,26 +176,31 @@ window.onload = function (e) {
                 i++;
             }
 
-            console.log(matrix.getName(), "  ранил корабль противника");
+            addText(matrix, "ранил корабль противника") ;
         };
 
         // Проверяем в какую клетку попали
         switch (fieldAttribute) {
             case "ship":
                 matrix.setCell(+positionHit[0], +positionHit[1], "hit");
-                checkKill(matrix)
+                checkKill(matrix);
+                if(matrix.checkGameStatus() == true) {
+                   /* endingGame();*/
+                };
                 break;
             case "hit":
             case "blank":
-                console.log(matrix.getName(), "Ты сюда уже стрелял, давай в другую");
+                addText(matrix, ", ты сюда уже стрелял, давай в другую");
                 controlGame();
                 return;
             default:
                 matrix.setCell(+positionHit[0], +positionHit[1], "blank");
         }
-        ;
 
         // В зависимости от хода удаляем обрачотчики и перезапускаем ход
+
+
+
         if (myStep) {
            
             myMatrixWrap.removeEventListener("mousedown", myShoot);
@@ -224,8 +236,7 @@ window.onload = function (e) {
 
             setTimeout(function () {
                 compMatrixWrap.click();
-            }, 100);
-
+            }, 50);
         }
     };
 
@@ -276,11 +287,8 @@ window.onload = function (e) {
             }
 
             createNewShip(matrix, coordsShip);
-
         }
     };
-
-
 
     // Проверяем чтоб коробли не становились рядом друг с другом
     function clearFieldCheck(matrix, arr, fieldName) {
