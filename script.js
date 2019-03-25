@@ -106,8 +106,8 @@ window.onload = function (e) {
             compName = compNameWrap.value,
             userName = userNameWrap.value;
 
-            innerCompName.innerHTML = "Поле " + compName;
-            innerUserName.innerHTML = "Поле " + userName;
+            innerCompName.innerHTML = "Ход " + compName;
+            innerUserName.innerHTML = "Ход " + userName;
             overlay.style.display = "none";
         }
     });
@@ -249,10 +249,13 @@ window.onload = function (e) {
     function controlGame() {
 
         if (myStep) {
+            innerCompName.style.color = "blue";
+            innerUserName.style.color = "rgba(0,0,0,.87)";
             myMatrixWrap.addEventListener("mousedown", myShoot);
 
         } else {
-
+            innerUserName.style.color = "blue";
+            innerCompName.style.color = "rgba(0,0,0,.87)";
             compMatrixWrap.addEventListener("click", compShoot);
 
             setTimeout(function () {
