@@ -79,8 +79,8 @@ window.onload = function (e) {
         }
     };
 
-    const compNameWrap = document.querySelector("[data-input-name='comp']"),
-        userNameWrap = document.querySelector("[data-input-name='user']"),
+    const compNameWrap = document.querySelector("[data-input-name='revertComp']"),
+        userNameWrap = document.querySelector("[data-input-name='revertUser']"),
         innerCompName = document.querySelector("[data-name='comp']"),
         innerUserName = document.querySelector("[data-name='user']"),
         overlay = document.querySelector("[data-overlay]"),
@@ -103,11 +103,11 @@ window.onload = function (e) {
 
     btnStart.addEventListener("click", function (e) {
         if (!this.classList.contains("disabled")) {
-            compName = compNameWrap.value,
-            userName = userNameWrap.value;
+            compName =  userNameWrap.value,
+            userName = compNameWrap.value;
 
-            innerCompName.innerHTML = "Ход " + compName;
-            innerUserName.innerHTML = "Ход " + userName;
+            innerCompName.innerHTML = "Ход " + userName;
+            innerUserName.innerHTML = "Ход " + compName;
             overlay.style.display = "none";
         }
     });
